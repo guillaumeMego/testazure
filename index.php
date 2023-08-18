@@ -13,8 +13,8 @@ $conn = new PDO("sqlsrv:$serverName", $connectionOptions);
 
 
 // afficher les users
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM User";
 $stmt = $conn->query($sql);
 while ($row = $stmt->fetch()) {
-    echo $row['id'] . " " . $row['name'] . " " . $row['email'] . "<br />";
+    echo $row['FirstName'] . " " . $row['LastName'] . " " . $row['Email'] . "<br />";
 }
