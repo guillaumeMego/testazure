@@ -3,26 +3,18 @@
 echo "Hello World!";
 
 
-$serverName = "your_server_name.database.windows.net";
-$connectionOptions = [ 
-    "Database" => "basetest",
-    "Uid" => "your_username",
-    "PWD" => "your_password"
-];
-
 try {
-    $conn = new PDO("sqlsrv:server=$serverName;Database=basetest", $connectionOptions);
+    $conn = new PDO("sqlsrv:server = tcp:servertestguillaume.database.windows.net,1433; Database = basetest", "CloudSA581e4b7f", "{your_password_here}");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    echo "Connected successfully to Azure database.";
-
-    $query = "SELECT * FROM [User]";
-    $stmt = $conn->query($query);
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo "UserID: " . $row['UserID'] . " - Name: " . $row['FirstName'] . " " . $row['LastName'] . "<br>";
-    }
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
 }
+catch (PDOException $e) {
+    print("Error connecting to SQL Server.");
+    die(print_r($e));
+}
+
+// SQL Server Extension Sample Code:
+$connectionInfo = array("UID" => "CloudSA581e4b7f", "pwd" => "{your_password_here}", "Database" => "basetest", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+$serverName = "tcp:servertestguillaume.database.windows.net,1433";
+$conn = sqlsrv_connect($serverName, $connectionInfo);
+?>
 
